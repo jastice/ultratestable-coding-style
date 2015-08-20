@@ -10,15 +10,16 @@ public class DataQueue {
 
     private final KeyValueStore kvStore;
 
-    private final Lag lag = new Lag();
+    private final Lag lag;
 
-    public DataQueue(KeyValueStore kvStore) {
+    public DataQueue(KeyValueStore kvStore, Lag lag) {
         this.kvStore = kvStore;
+        this.lag = lag;
     }
 
     public void start() {
 
-        for (int i = 0; i < 5; i++)
+        for (int i = 0; i < 5; i++) {
             new Thread(() -> {
 
                 while (true) {
@@ -31,6 +32,7 @@ public class DataQueue {
                 }
 
             }).start();
+        }
 
     }
 
