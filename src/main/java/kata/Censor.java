@@ -38,7 +38,6 @@ public class Censor {
 
             String[] words = line.split("[\\W\\s]+");
 
-            int i = 0;
             for(String word: words) {
                 Thread.sleep(pause);
                 long now = System.currentTimeMillis();
@@ -46,7 +45,7 @@ public class Censor {
                 if (!word.isEmpty()) try {
                     kvStore.get(word).thenAcceptAsync((data) -> {
                         long totalEvents = data.eventsSince + 1;
-                        double rate = (double) totalEvents / (now - data.timestamp) * MILLIS_PER_MINUTE;
+                        double rate = (double) totalEvents / ((now - data.timestamp) * MILLIS_PER_MINUTE);
 
                         if (rate < rateLimit) {
                             System.out.print(word + " ");
