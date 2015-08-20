@@ -45,7 +45,7 @@ public class Censor {
                 if (!word.isEmpty()) try {
                     kvStore.get(word).thenAcceptAsync((data) -> {
                         long totalEvents = data.eventsSince + 1;
-                        double rate = (double) totalEvents / ((now - data.timestamp) * MILLIS_PER_MINUTE);
+                        double rate = ((double)totalEvents / (now - data.timestamp)) * MILLIS_PER_MINUTE;
 
                         if (rate < rateLimit) {
                             System.out.print(word + " ");
