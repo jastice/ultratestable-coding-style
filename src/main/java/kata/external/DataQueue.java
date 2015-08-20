@@ -10,6 +10,8 @@ public class DataQueue {
 
     private final KeyValueStore kvStore;
 
+    private final Lag lag = new Lag();
+
     public DataQueue(KeyValueStore kvStore) {
         this.kvStore = kvStore;
     }
@@ -17,7 +19,18 @@ public class DataQueue {
     public void start() {
 
         for (int i = 0; i < 5; i++)
-            new Thread(new KVWriter()).start();
+            new Thread(() -> {
+
+                while (true) {
+                    try {
+                        Data data = queue.takeFirst();
+                        lag.lagged(37, () -> kvStore.update(data) );
+                    } catch (InterruptedException e) {
+                        return;
+                    }
+                }
+
+            }).start();
 
     }
 
@@ -27,19 +40,5 @@ public class DataQueue {
         } catch (InterruptedException ignore) {}
     }
 
-    private class KVWriter implements Runnable {
-        @Override
-        public void run() {
-            while (true) {
-                try {
-                    Data data = queue.takeFirst();
-                    Thread.sleep(37);
-                    kvStore.update(data);
-                } catch (InterruptedException e) {
-                    return;
-                }
-            }
-        }
-    }
 
 }
