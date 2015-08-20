@@ -11,7 +11,11 @@ public class KeyValueStore {
 
     private final long defaultTime = System.currentTimeMillis();
 
-    private final Lag lag = new Lag();
+    private final Lag lag;
+
+    public KeyValueStore(Lag lag) {
+        this.lag = lag;
+    }
 
     private Data getOrDefault(String id) {
         return kv.getOrDefault(id, new Data(id, defaultTime, 0));

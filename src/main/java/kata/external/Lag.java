@@ -8,14 +8,19 @@ import java.util.function.Supplier;
 
 public class Lag {
 
-    private final Random random = new Random();
+    private final Random random;
+    private final Timer timer;
 
-    private final Timer timer = new Timer();
+    public Lag(Random random, Timer timer) {
+        this.random = random;
+        this.timer = timer;
+    }
 
     public <T> CompletableFuture<T> lagged(long delay, Supplier<T> supplier) {
 
         CompletableFuture<T> future = new CompletableFuture<T>();
         TimerTask task = new TimerTask() {
+            @Override
             public void run() {
                 future.complete(supplier.get());
             }
