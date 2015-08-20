@@ -18,3 +18,4 @@ This will run the SuperAsyncCensorMachine on "War and Peace".
 ## The task
 
 Refactor the censoring mechanism so that you can test the logic without dealing with the asynchronous bits.
+
