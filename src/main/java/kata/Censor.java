@@ -59,7 +59,6 @@ public class Censor {
                 } catch (ExecutionException e) {
                     e.printStackTrace();
                 }
-                i++;
             }
 
             System.out.println();
