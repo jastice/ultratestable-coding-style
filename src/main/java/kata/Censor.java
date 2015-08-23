@@ -6,7 +6,6 @@ import kata.external.KeyValueStore;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.concurrent.ExecutionException;
 
 
 public class Censor {
@@ -42,7 +41,7 @@ public class Censor {
                 Thread.sleep(pause);
                 long now = System.currentTimeMillis();
 
-                if (!word.isEmpty()) try {
+                if (!word.isEmpty()) {
                     kvStore.get(word).thenAcceptAsync((data) -> {
                         long totalEvents = data.eventsSince + 1;
                         double rate = ((double)totalEvents / (now - data.timestamp)) * MILLIS_PER_MINUTE;
@@ -54,10 +53,7 @@ public class Censor {
                             // censor limited words, but don't count them
                             System.out.print("CENSORED ");
                         }
-                    }).get();
-                } catch (InterruptedException ignored) {
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
+                    });
                 }
             }
 
