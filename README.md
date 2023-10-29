@@ -2,7 +2,7 @@
 
 A simple way to make your logic code easier to test.
 
-Inspired by [Blog post by Jessitron](http://blog.jessitron.com/2015/06/ultratestable-coding-style.html), a refactoring practice.
+Inspired by [Blog post by Jessitron](http://blog.jessitron.com/2015/06/ultratestable-coding-style), a refactoring practice.
 
 This repository contains a Java 8 application that reads a file, asynchronously saves the rate at which words occur, 
 and censors words which occur too often per minute.
